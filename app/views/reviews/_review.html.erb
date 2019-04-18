@@ -1,0 +1,21 @@
+<div class="media">
+  <div class="media-left">
+    <% if review.user.avatar.attached? %>
+      <span><%= link_to (image_tag review.user.avatar.variant(resize: "30x30"), style: 'width: 30px; height: 30px;', class: "rounded-circle media-object media-review-object") , profile_path(review.user.username) %></span>
+    <% else %>
+      <%= link_to (image_tag 'default-avatar.jpg', class: "rounded-circle media-object media-review-object", style: "width: 30px; height: 30px;"), profile_path(review.user.username) %>
+    <% end %>
+  </div>
+  <div class="media-body media-review-body">
+    <p class="notifications-p"><%= link_to review.user.username, profile_path(review.user.username) %></p>
+    <div class="review-rating" data-score="<%= review.rating %>"></div>
+    <p class="notifications-p"><%= review.comment %></p>
+    <p class="text-muted notifications-p"><small><i>Reviewed on <%= review.created_at.strftime('%-d %B %Y')%></i></small></p>
+    <% if user_signed_in? %>
+      <% if review.user_id == current_user.id %>
+        <small><%= link_to 'Edit Review', edit_book_review_path(review.book, review) %> | 
+        <%= link_to 'Delete Review', book_review_path(review.book, review), method: :delete, data: { confirm: "Are you sure?" } %></small>
+      <% end %>
+    <% end %>
+  </div>
+</div>

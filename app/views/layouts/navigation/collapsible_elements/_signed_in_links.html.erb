@@ -1,0 +1,49 @@
+<li class="pc-menu nav-item">
+  <%= link_to 'Write New Book', main_app.new_book_path, id: 'user-settings', class: "nav-link" %>
+</li>
+
+<li class="nav-item dropdown pc-menu">
+  <a class="nav-link" id="user-settings" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span id="user-name">
+      <% if user_signed_in? %>
+        <%#= current_user_avatar_select(@user) %>
+        <%= current_user.username %>
+        <span><i class="fa fa-chevron-down"></i></span>
+      <% end %>
+    </span>
+  </a>
+
+  <div class="dropdown-menu dropdown-menu-right" role="menu">
+    
+    <%= link_to main_app.profile_path(current_user.username), class: 'dropdown-item' do %>
+      <i class="fa fa-user-circle" aria-hidden="true"></i> <%= current_user.username %>
+    <% end %>
+  
+    <%= link_to '#', class: 'dropdown-item' do %>
+      <i class="fa fa-list" aria-hidden="true"></i> Saved Stories (<%= current_user.id %>)
+    <% end %>
+  
+    <%= link_to main_app.messenger_path, class: 'messenger-link dropdown-item' do %>
+      <i class="fa fa-envelope" aria-hidden="true"></i> Messenger
+    <% end %>
+  
+    <%= link_to main_app.edit_user_registration_path, class: 'dropdown-item' do %>
+      <i class="fa fa-cog" aria-hidden="true"></i> Account Settings
+    <% end %>
+  
+    <%= link_to main_app.destroy_user_session_path, class: 'dropdown-item' do %>
+      <i class="glyphicon glyphicon-off" aria-hidden="true"></i> Log out
+    <% end %>
+  </div>
+</li>
+
+<li class="mobile-menu">
+  <%= link_to main_app.edit_user_registration_path, class: '' do %>
+    <i class="fa fa-cog" aria-hidden="true"></i> Account Settings
+  <% end %>
+</li>
+<li class="mobile-menu" style="background:red;">
+  <%= link_to main_app.destroy_user_session_path, class: '' do %>
+    <i class="glyphicon glyphicon-off" aria-hidden="true"></i> Log out
+  <% end %>
+</li>

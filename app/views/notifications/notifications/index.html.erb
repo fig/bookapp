@@ -1,0 +1,18 @@
+<div class="container py-2">
+  <div class="row">
+    <div class="col-md-12">
+      <h1><%= t('notifications.all_notifications') %> <%= link_to t('notifications.clean_all'), notifications.clean_notifications_path, class: 'btn  btn-danger btn-sm', method: 'delete' %></h1>
+      <% if @notifications.blank? %>
+        <div class="no-records"><%= t('notifications.no_records') %></div>
+      <% else %>
+        <% @notification_groups.each do |group, notifications| %>
+          <div class="notification-group">
+            <div class="group-title"><%= group %></div>
+            <%= render notifications %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <%= paginate @notifications %>
+</div>

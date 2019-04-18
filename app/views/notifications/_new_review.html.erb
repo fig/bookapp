@@ -1,0 +1,20 @@
+<% if notification.target %>
+	<div class=''>
+		<p class="notifications-p"><i class="fa fa-star text-secondary"></i>| <%= link_to notification.actor.username, main_app.profile_path(notification.actor.username) %> reviewed <%= link_to notification.second_target.title, main_app.book_path(notification.second_target) %></p>
+	</div>
+
+	<div class=''>
+		<div class="review-rating" data-score="<%= notification.target.rating %>"></div>
+		<p class="notifications-p"><%= notification.target.comment %></p>
+	</div>
+
+	<script>
+		$('.review-rating').raty({
+			readOnly: true,
+			score: function() {
+				return $(this).attr('data-score');
+			},
+			path: '/assets/'
+		});
+	</script>
+<% end %>

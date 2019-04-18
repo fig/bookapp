@@ -1,0 +1,3 @@
+<% if notification.target %>
+    <%= link_to notification.actor.username, main_app.profile_path(notification.actor.username) %> started following you.
+<% end %>

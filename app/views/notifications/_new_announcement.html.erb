@@ -1,0 +1,7 @@
+<% if notification.target %>
+    <div class="media-heading">
+        <p class="notifications-p"><i class="fa fa-volume-up text-secondary"></i>| <%= link_to notification.actor.username, main_app.profile_path(notification.actor.username) %> made a new announcement: <%= link_to notification&.target&.title, main_app.announcement_path(notification.target) %></p>
+    </div>
+<% else %>
+    <p class="text-danger"> <i class="fa fa-trash"></i>* Action has been deleted. *</p>
+<% end %>

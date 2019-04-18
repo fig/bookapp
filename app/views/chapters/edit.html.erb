@@ -1,0 +1,60 @@
+<% provide(:page_title, (['Edit Book', @chapter.title, @book.title])) %>
+
+<nav aria-label="breadcrumb" role="navigation">
+	<ol class="breadcrumb text-center" style="background: #333; border-radius: 0;">
+		<li class="breadcrumb-item"><%= link_to 'All Books', books_path, style: "color: #ffffff" %></li>
+		<li class="breadcrumb-item" aria-current="page"><%= link_to @book.title, @book, style: "color: #ffffff" %></li>
+		<li class="breadcrumb-item" aria-current="page"><%= link_to @chapter.title, book_chapter_path(@book, @chapter.id), style: "color: #ffffff" %></li>
+		<li class="breadcrumb-item text-white" aria-current="page"><u><i>Edit Chapter</i></u></li>
+	</ol>
+</nav>
+
+<div class="container py-2">
+  <div class="row">
+    <div class="col-sm-8 book-form-border">
+      <h1>Edit Chapter</h1>
+      <hr>
+      <br>
+
+			<%= form_for([@book, @chapter]) do |f| %>
+
+				<% if @chapter.errors.any? %>
+				    <div id="error_explanation">
+				      <h2><%= pluralize(@chapter.errors.count, "error") %> prohibited this chapter from being saved:</h2>
+
+				      <ul>
+				      <% @chapter.errors.full_messages.each do |message| %>
+				        <li><%= message %></li>
+				      <% end %>
+				      </ul>
+				    </div>
+				<% end %>
+
+				<div class="field">
+				    <b><%= f.label :title %></b>
+				    <%= f.text_field :title, class: "form-control" %>
+				</div>
+
+				<br>
+
+				<div class="field">
+				    <b><%= f.label :content %></b>
+				    <%= f.text_area :content, class: "form-control" %>
+				</div>
+
+				<br>
+
+				<div class="field">
+				    <%= f.button "Update Chapter", class: "btn btn-sm btn-success", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Updating Chapter..."} %>
+				</div>
+			<% end %>
+
+			<br>
+			<%= link_to 'Back', book_chapter_path(@book, @chapter.id) %>
+		</div>
+		<div class="col-sm-4 pt-2">
+			<h2>Writing guidelines</h2>
+			<hr>
+    </div>
+	</div>
+</div>

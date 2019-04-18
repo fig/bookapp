@@ -1,0 +1,34 @@
+<% provide(:page_title, ([@tag.name, 'All Tags'])) %>
+
+<div class="container py-3">
+    <div class="row">
+        <div class="col-lg-3 col-md-12 col-sm-12 sidebar-col">
+            <%= render 'books/widgets/sidebar_category' %>
+        </div>
+        
+        <div class="col-sm-9 stories-col">
+			<div class="tags-meta pl-5">
+				<h2>Books Filtered by Tag:</h2>
+				<h3 class="text-secondary"><%= @tag.name %> × <%= pluralize(@tag.books.count, 'Book') %></h3>
+			</div>
+            <hr>
+			<div class="row books-wrapper">
+				<% unless @tag.books.blank? %>
+					<%= render @tag.books %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+</div>
+<br>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function() {
+			return $(this).attr('data-score')
+		}
+	});
+</script>

@@ -1,0 +1,11 @@
+<div class="conversation-details">
+  <%= link_to :back do %>
+    <i class="fa fa-arrow-left back-to-chats-main" aria-hidden="true"></i>
+  <% end %>
+  <div class="conversation-name">
+    <%= link_to profile_path(@recipient.username) do %>
+      <%= recipient_avatar_select(@user) %>
+      <%= @recipient.username %>
+    <% end %>
+  </div>
+</div>

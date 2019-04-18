@@ -1,0 +1,6 @@
+<h5>Recent Articles</h5>
+<hr>
+<% @articles.each do |article| %>
+    <h6><%= link_to article.title, article %></h6>
+    <hr>
+<% end %>

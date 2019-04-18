@@ -1,0 +1,37 @@
+<% provide(:page_title, @announcement.title) %>
+
+<nav aria-label="breadcrumb" role="navigation">
+	<ol class="breadcrumb breadcrumb-body text-center" style="background: #333; border-radius: 0;">
+		<li class="breadcrumb-item"><%= link_to 'Home', main_app.home_path, style: "color: #ffffff" %></li>
+    <li class="breadcrumb-item"><%= link_to 'All Announcements', announcements_path, style: "color: #ffffff" %></li>
+		<li class="breadcrumb-item text-white" aria-current="page"><u><i><%= @announcement.title %></i></u></li>
+	</ol>
+</nav>
+
+<div class="container py-4">
+  <div class="row">
+    <div class="col-sm-9 sidebar-col">
+      <h1><%= @announcement.title %></h1>
+      <p class="text-secondary">
+        <i class="fa fa-pencil"></i>
+        <% if @announcement.user.avatar.attached? %>
+            <span><%= link_to (image_tag @announcement.user.avatar.variant(resize: "30x30"), style: 'width: 30px; height: 30px;', class: "rounded-circle") , profile_path(@announcement.user.username) %></span>
+        <% else %>
+            <%= link_to (image_tag 'default-avatar.jpg', class: "rounded-circle", style: "width: 30px; height: 30px;"), profile_path(@announcement.user.username) %>
+        <% end %>
+        <%= link_to @announcement.user.username, profile_path(@announcement.user.username) %>, <i class="fa fa-clock-o"></i><%= time_ago_in_words @announcement.created_at %> ago, <i class="fa fa-clock-o"></i><%= pluralize(@announcement.impressions.count, 'Read') %>
+      </p>
+      <hr>
+      <p><%= simple_format @announcement.content %></p>
+    </div>
+
+    <div class="col-sm-3">
+      <%= render 'announcements/widgets/recent_announcements' %>
+      <br>
+      <%= render 'articles/widgets/recent_articles' %>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_announcement_path(@announcement) %> |
+<%= link_to 'Back', announcements_path %>

@@ -1,0 +1,22 @@
+<%= form_for([@book, @book.reviews.build]) do |f| %>
+
+    <div id="rating-form">
+        <label>Rating:</label>
+    </div>
+
+    <div class="field">
+        <%# <%= f.label :comment %>
+        <p><%= f.text_area :comment, placeholder: 'Write comment...', class: "form-control review-text-field" %></p>
+    </div>
+    <div class="actions">
+    	<%= f.button "Submit Review", class: "button6", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Submitting Review..."} %>
+	</div>
+
+<% end %>
+
+<script>
+	$('#rating-form').raty({
+		path: '/assets/',
+		scoreName: 'review[rating]'
+	});
+</script>

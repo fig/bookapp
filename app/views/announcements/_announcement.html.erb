@@ -1,0 +1,15 @@
+<div class="col-sm-9 col-full-width pb-2">
+    <div class="an-wrapper clearfix pt-3 px-2" style="border: 1px solid #ddd; border-radius: 10px;">
+        <div class="an-img-wrapper pull-left">
+            <% if announcement.user.avatar.attached? %>
+                <span><%= link_to (image_tag announcement.user.avatar.variant(resize: "40x40"), style: 'width: 40px; height: 40px;', class: "rounded-circle") , profile_path(announcement.user.username) %></span>
+            <% else %>
+                <%= link_to (image_tag 'default-avatar.jpg', class: "rounded-circle", style: "width: 40px; height: 40px;"), profile_path(announcement.user.username) %>
+            <% end %>
+        </div>
+        <div class="an-meta pull-left pl-3">
+            <h4><%= link_to announcement.title, announcement, style: "color: #333;" %></h4>
+            <p><i class="fa fa-pencil text-secondary"></i><%= link_to announcement.user.username, profile_path(announcement.user.username) %>, <i class="fa fa-clock-o text-secondary"></i><%= time_ago_in_words announcement.created_at %> ago</p>
+        </div>
+    </div>
+</div>

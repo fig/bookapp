@@ -1,0 +1,9 @@
+<% if notification.target %>
+  <div class=''>
+    <p class="notifications-p"><i class="fa fa-comment text-secondary"></i>| <%= link_to notification.actor.username, main_app.profile_path(notification.actor.username) %> commented on <%= link_to notification.second_target.title, main_app.book_chapter_path(notification.second_target, notification.target.id) %></p>
+  </div>
+
+  <div class=''>
+    <p class="notifications-p"><%= notification.target.body %></p>
+  </div>
+<% end %>

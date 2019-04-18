@@ -1,0 +1,251 @@
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+
+  <div class="row">
+
+    <div class="col-sm-7 col-lg-7">
+      <%#= render 'layouts/navigation/header' %>
+    </div>
+    
+    <div class="col-sm-5 col-lg-5">
+      <%#= render 'layouts/navigation/collapsible_elements' %>
+    </div>
+
+  </div>
+</nav>-->
+
+<div class="zeynep">
+  <ul>
+
+    <% if user_signed_in? %>
+      <li class="has-submenu">
+        <span data-submenu="profiles">
+        <a data-submenu="profiles"><%= current_user_avatar_select(@user) %> <%= current_user.username %></a>
+        <i class="fa fa-chevron-right pull-right" data-submenu="profiles"></i></span>
+
+        <div id="profiles" class="submenu">
+          <div class="submenu-header" data-submenu-close="profiles">
+            <span><i class="fa fa-chevron-left"></i>
+            <a>Main Menu</a></span>
+          </div>
+
+          <label>USER SETTINGS</label>
+
+          <ul>
+            <li>
+              <%= link_to main_app.profile_path(current_user.username) do %>
+                <i class="fa fa-user-circle" aria-hidden="true"></i> <%= current_user.username %> (My Profile)
+              <% end %>
+            </li>
+
+            <li>
+              <%= link_to '#' do %>
+                <i class="fa fa-list" aria-hidden="true"></i> Saved Books (<%= current_user.id %>)
+              <% end %>
+            </li>
+
+            <li>
+              <%= link_to main_app.edit_user_registration_path do %>
+                <i class="fa fa-cog" aria-hidden="true"></i> Account Settings
+              <% end %>
+            </li>
+
+            <li>
+              <%= link_to main_app.destroy_user_session_path do %>
+                <i class="fa fa-sign-out" aria-hidden="true"></i> Sign out
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to main_app.sign_up_path do %>
+          <i class="fa fa-user-plus"></i>
+          Sign Up
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to main_app.sign_in_path do %>
+          <i class="fa fa-sign-in"></i>
+          Sign In
+        <% end %>
+      </li>
+    <% end %>
+
+    <li>
+      <%= link_to main_app.root_path do %>
+        <i class="fa fa-home"></i>
+        Homepage
+      <% end %>
+    </li>
+
+    <% if user_signed_in? %>
+      <li>
+        <%= link_to main_app.messenger_path do %>
+          <i class="fa fa-bolt"></i>
+          Messenger
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <li class="has-submenu">
+        <span data-submenu="messages"><i class="fa fa-envelope-o"></i><span id="unseen-conversations"></span>
+        <a data-submenu="messages">Messages</a>
+        <i class="fa fa-chevron-right pull-right" data-submenu="messages"></i></span>
+
+        <div id="messages" class="submenu">
+          <div class="submenu-header" data-submenu-close="messages">
+            <span><i class="fa fa-chevron-left"></i>
+            <a>Main Menu</a></span>
+          </div>
+
+          <label>MESSAGES</label>
+
+          <ul>
+            <% @all_conversations.each do |conversation| %>
+              <%= render partial: conversation_header_partial_path(conversation),
+                        locals: { conversation: conversation, 
+                                  user_id: current_user.id } %>
+            <% end %>
+          </ul>
+        </div>
+      </li>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <li>
+        <%= link_to notifications_path do %>
+          <i class="fa fa-bell-o" aria-hidden="true"></i><%= pluralize(Notification.unread_count(current_user), 'Notification') %>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li>
+      <%= link_to main_app.books_path do %>
+        <i class="fa fa-book"></i>
+        Explore
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to main_app.announcements_path do %>
+        <span><i class="fa fa-bullhorn"></i>
+        Announcements</span> <span class="badge badge-light">× <%= Announcement.count %></span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to main_app.articles_path do %>
+        <span><i class="fa fa-edit"></i>
+        Articles</span> <span class="badge badge-light">× <%= Article.count %></span>
+      <% end %>
+    </li>
+
+    <li class="has-submenu">
+      <span data-submenu="ratings"><i class="fa fa-clipboard"></i>
+      <a data-submenu="ratings">Filter By Rating</a>
+      <i class="fa fa-chevron-right pull-right" data-submenu="ratings"></i></span>
+
+      <div id="ratings" class="submenu">
+        <div class="submenu-header" data-submenu-close="ratings">
+          <span><i class="fa fa-chevron-left"></i>
+          <a>Main Menu</a></span>
+        </div>
+
+        <label>RATING × <%= Rating.count %></label>
+
+        <ul>
+          <% @ratings.each do |rating| %>
+            <li>
+              <span><%= image_tag rating.thumbnail %></span> <span><%= link_to rating.name, rating %></span> <span class="badge badge-light">× <%= pluralize(rating.books.count, 'Book') %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </li>
+
+    <li class="has-submenu">
+      <span data-submenu="genres"><i class="fa fa-list"></i>
+      <a data-submenu="genres">Filter By Genre</a>
+      <i class="fa fa-chevron-right pull-right" data-submenu="genres"></i></span>
+
+      <div id="genres" class="submenu">
+        <div class="submenu-header" data-submenu-close="genres">
+          <span><i class="fa fa-chevron-left"></i>
+          <a>Main Menu</a></span>
+        </div>
+
+        <label>GENRES × <%= Genre.count %></label>
+
+        <ul>
+          <% @genres.each do |genre| %>
+            <li>
+              <span><%= link_to genre.name, genre %></span> <span class="badge badge-light">× <%= pluralize(genre.books.count, 'Book') %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </li>
+
+    <li>
+      <%= link_to main_app.tags_path do %>
+        <i class="fa fa-tag"></i>
+        Filter By Tags
+      <% end %>
+    </li>
+  </ul>
+</div>
+
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <%= link_to 'Stouchbox', main_app.root_path, class: "navbar-brand" %>
+  <button class="navbar-toggler pull-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="navbar-toggler-icon"></i>
+    <!--<i class="fa fa-ellipsis-v"></i>-->
+  </button>
+</nav>
+
+<script>
+  $(function() {
+    // init zeynepjs
+    var zeynep = $('.zeynep').zeynep({
+      onClosed: function () {
+        // enable main wrapper element clicks on any its children element
+        $("body main").attr("style", "");
+
+        console.log('the side menu is closed.');
+      },
+      onOpened: function () {
+        // disable main wrapper element clicks on any its children element
+        $("body main").attr("style", "pointer-events: none;");
+
+        console.log('the side menu is opened.');
+      }
+    });
+
+    // handle zeynep overlay click
+    $(".zeynep-overlay").click(function () {
+      zeynep.close();
+    });
+
+    // open side menu if hamburger menu is clicked
+    $("nav .navbar-toggler").click(function () {
+      if ($("html").hasClass("zeynep-opened")) {
+        zeynep.close();
+      } else {
+        zeynep.open();
+      }
+    });
+  });
+
+  $(document).ready(function(){
+    controller_name = "<%= params[:controller] %>"
+    //The controller name will be dynamically inserted by rails
+    $(".zeynep ul li a").each(function(){
+      if($(this).attr("href").indexOf(controller_name) > -1){
+          $(this).addClass("active")
+      }
+    });
+  });
+</script>

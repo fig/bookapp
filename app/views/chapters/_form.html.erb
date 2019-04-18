@@ -1,0 +1,32 @@
+<%= form_for([@book, @book.chapters.build]) do |f| %>
+
+	<% if @chapter.errors.any? %>
+	    <div id="error_explanation">
+	      <h2><%= pluralize(@chapter.errors.count, "error") %> prohibited this chapter from being saved:</h2>
+
+	      <ul>
+	      <% @chapter.errors.full_messages.each do |message| %>
+	        <li><%= message %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	<% end %>
+
+	<div class="field">
+	    <b><%= f.label :title %></b>
+	    <%= f.text_field :title, class: "form-control" %>
+	</div>
+
+	<br>
+
+	<div class="field">
+	    <b><%= f.label :content %></b>
+	    <%= f.text_area :content, class: "form-control" %>
+	</div>
+
+	<br>
+
+	<div class="actions">
+    	<%= f.button "Publish Chapter", class: "btn btn-sm btn-success", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Publishing Chapter..."} %>
+	</div>
+<% end %>

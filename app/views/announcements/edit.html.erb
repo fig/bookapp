@@ -1,0 +1,29 @@
+<% provide(:page_title, (['Edit Announcement', @announcement.title])) %>
+
+<nav aria-label="breadcrumb" role="navigation">
+	<ol class="breadcrumb breadcrumb-body text-center" style="background: #333; border-radius: 0;">
+		<li class="breadcrumb-item"><%= link_to 'Home', main_app.home_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item"><%= link_to 'All Announcements', announcements_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item"><%= link_to @announcement.title, @announcement, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item text-white" aria-current="page"><u><i>Edit Announcement</i></u></li>
+	</ol>
+</nav>
+
+<div class="container py-2">
+    <div class="row">
+        <div class="col-sm-12 book-form-border">
+
+            <h1>Edit Announcement</h1>
+            <hr><br>
+
+            <%= render 'form', announcement: @announcement %>
+            <br>
+            <%= link_to 'New Announcement', new_announcement_path %> |
+            <%= link_to 'Show', @announcement %> |
+            <%= link_to 'Back', announcements_path %>
+
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,5 @@
+<%= link_to notifications_path, class: 'nav-link' do %>
+    <i class="fa fa-bell-o notification-bell" aria-hidden="true"></i>
+    <span id="unseen-conversations"></span>
+    <%= Notification.unread_count(current_user) %>
+<% end %>

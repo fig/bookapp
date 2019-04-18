@@ -1,0 +1,1 @@
+<%= render @book.related_books.most_recent.limit(6).reject { |b| b.id == @book.id } %>

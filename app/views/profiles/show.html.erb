@@ -1,0 +1,29 @@
+<% provide(:page_title, @user.username) %>
+
+<div class="row">
+    <%= render 'profiles/show_meta' %>
+
+    <div class="container py-3">
+		<div class="row">
+			<div class="col-sm-3 sidebar-col">
+				<div class="user-stats">
+					<h3><u><%= @user.username %>'s Stats:</u></h3>
+					<p class="modal-p"><b><u><i><%= pluralize(@user.books.count, 'Book') %></i></u></b></p>
+					<p class="modal-p"><%= link_to pluralize(@user.reviews.count, 'Review'), user_reviews_path %></p>
+					<p class="modal-p"><%= link_to pluralize(@user.followers.count, 'Follower'), user_followers_path %></p>
+					<p class="modal-p"><%= link_to pluralize(@user.following.count, 'Following'), user_following_path %></p>
+				</div>
+
+			</div>
+			<div class="col-sm-9">
+                <div class="row">
+                    <% unless @user.books.blank? %>
+                        <%= render @user.books %>
+                    <% else %>
+                        <p class="text-warning">*<%= @user.username %> has not posted any book*</p>
+                    <% end %>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>

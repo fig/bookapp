@@ -1,0 +1,27 @@
+<% provide(:page_title, (['New Chapter', @book.title])) %>
+
+<nav aria-label="breadcrumb" role="navigation">
+	<ol class="breadcrumb breadcrumb-body text-center" style="background: #333; border-radius: 0;">
+        <li class="breadcrumb-item"><%= link_to 'Home', home_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item"><%= link_to 'All Books', books_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item"><%= link_to @book.title, @book, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item text-white" aria-current="page"><i><u>Start Writing (Chapter)</u></i></li>
+    </ol>
+</div>
+<div class="container py-2">
+  <div class="row">
+    <div class="col-sm-8 book-form-border">
+      <div class="container">
+        <h1>Starting Writing (Chapter)</h1>
+        <hr>
+        <%= render 'form' %>
+        <br>
+        <%= link_to 'Back', @book %>
+      </div>
+    </div>
+    <div class="col-sm-4 pt-2 ">
+      <h2>Writing guidelines</h2>
+      <hr>
+    </div>
+  </div>
+</div>

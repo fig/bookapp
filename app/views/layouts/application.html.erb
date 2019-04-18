@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= yield(:page_title) %>  &bull;  Stouchbox</title>
+    <%= Gon::Base.render_data %>
+    <%= csrf_meta_tags %>
+    <% if !Rails.env.test? %>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/5.0.9/css/font-awesome.min.css">
+    <% end %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  	<%= render 'layouts/navigation' %>
+    <% if notice %>
+      <br>
+      <p class="notice"><%= notice %></p>
+    <% elsif alert %>
+      <br>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+    <%= yield %>
+    <footer class="container main_footer">
+      <p class="copyright">&copy; <%= Time.now.year %> Stouchbox</p>
+      <nav>
+        <a href="http://twitter.com/mackenziechild" target="_blank"><i class="fa fa-twitter"></i></a>
+        <a href="http://dribbble.com/mackenziechild" target="_blank"><i class="fa fa-dribbble"></i></a>
+        <a href="http://github.com/mackenziechild" target="_blank"><i class="fa fa-github"></i></a>
+      </nav>
+    </footer>
+    <%= render 'layouts/application/private_conversations_windows' %>
+    <%= render 'layouts/application/group_conversations_windows' %>
+  </body>
+</html>

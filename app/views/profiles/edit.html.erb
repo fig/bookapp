@@ -1,0 +1,26 @@
+<% provide(:page_title, (['Edit Profile', @user.username])) %>
+
+<%= form_with(model: @user, local: true, url: {action: "update"}) do |f| %>
+    <div class="container-fluid profile-banner" style="background-image: url(<%= rails_blob_url(@user.cover_image) %>)">
+        <div class="container header-meta profile-edit-wrapper">
+            <div class="row text-white">
+                <div class="col-sm-4">
+                    <div class="profile-image text-center">
+                        <h4 class="text-white"> Change your profile image:</h4>
+                        <%= profile_avatar_select(@user) %>
+                        <%= f.file_field :avatar, onChange: 'loadFile(event)' %>
+                    </div>
+                </div>
+                <div class="col-sm-8 profile-input-col">
+                    <h4 class="text-white"> Update your bio: </h4>
+                    <br>
+                    <p><%= f.text_area :bio, label: false, class: "form-control", style: "background: transparent; color: white;" %></p><hr>
+                    <h4 class="text-white"> Change your cover image:</h4>
+                    <%= f.file_field :cover_image, onChange: 'loadFile(event)' %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p><%= f.button "Update Profile", class: "btn btn-success btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Updating Profile..."} %></p>
+<% end %>
+            

@@ -1,0 +1,71 @@
+<% provide(:page_title, 'All Books') %>
+
+<div class="container py-3">
+    <div class="row">
+        <div class="col-lg-3 col-md-12 col-sm-12 sidebar-col">
+            <h5>5 Most read books</h5>
+            <hr>
+            <% @most_viewed.each do |book| %>
+                <h6><%= link_to book.title, book %></h6>
+                <hr>
+            <% end %>
+            <%= render 'books/widgets/sidebar_category' %>
+        </div>
+        
+        <div class="col-sm-9 stories-col">
+            <% unless params[:genre].blank? %>
+                <div class="genre-page-meta pl-5">
+                    <h3>Books Filtered by Genre:</h3>
+                    <h4 class="text-secondary"><%= @genre.name %> × <%= @genre.books.count %></h4>
+                    <p><strong>Description:</strong> <%= @genre.description %></p>
+                </div>
+				<hr>
+				<div class="genre-books">
+                    <div class="row books-wrapper">
+                        <% unless @genre.books.blank? %>
+                            <%= render @genre.books %>
+                        <% else %>
+                            <h5 class="text-warning">*** There are no books in this Genre. ***</h5>
+                        <% end %>
+                    </div>
+				</div>
+            <% else %>
+                <% unless params[:rating].blank? %>
+                    <div class="rating-page-meta pl-5">
+                        <h3>Books Filtered by Rating:</h3>
+                        <h4 class="text-secondary"><%= @rating.name %> × <%= @rating.books.count %></h4>
+                        <p><strong>Description:</strong> <%= @rating.description %></p>
+                    </div>
+                    <hr>
+                    <div class="rating-books">
+                        <div class="row books-wrapper">
+                            <% unless @rating.books.blank? %>
+                                <%= render @rating.books %>
+                            <% else %>
+                                <h5 class="text-warning">*** There are no books in this Rating. ***</h5>
+                            <% end %>
+                        </div>
+                    </div>
+                <% else %>
+                    <div class="row books-wrapper">
+                        <% unless @books.blank? %>
+                            <%= render @books %>
+                        <% else %>
+                            <h4>There are no books.</h4>
+                        <% end %>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function() {
+			return $(this).attr('data-score')
+		}
+	});
+</script>

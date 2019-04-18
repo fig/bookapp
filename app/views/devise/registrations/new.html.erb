@@ -1,0 +1,31 @@
+<div class="container-fluid signup-bg text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3 box-wrapper">
+        <br>
+        <h2 class="text-center text-white">Sign up Now, <small class="text-white">it's free!</small></h2>
+        <hr>
+
+        <%= bootstrap_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+
+          <%= f.text_field :username, 
+	                       placeholder: 'username (will be shown publicly)', 
+	                       class: 'form-control' %>
+          <%= f.text_field :email, 
+	                       placeholder: 'email', 
+	                       class: 'form-control' %>
+          <%= f.password_field :password, 
+                              placeholder: 'password', 
+                              class: 'form-control' %>
+          <%= f.password_field :password_confirmation, 
+                              placeholder: 'password confirmation', 
+                              class: 'form-control' %>
+          <%= f.button "Sign Up", class: "button6 form-control", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Signing Up..."} %>
+        <% end %>
+        <br>
+      </div>
+    </div> 
+  </div>
+
+  <br>
+</div>

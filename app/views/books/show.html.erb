@@ -1,0 +1,219 @@
+<% provide(:page_title, @book.title) %>
+
+<div class="jumbotron">
+  <div class="jumbotron-background">
+    <img style="background-image: url(<%= rails_blob_url(@book.image) %>)" class="blur">
+  </div>
+  <div class="container header-meta">
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb text-center" style="background: #333">
+        <li class="breadcrumb-item"><%= link_to 'All Books', books_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item text-white" aria-current="page"><u><i><%= @book.title %></i></u></li>
+      </ol>
+    </nav>
+    <div class="row story-meta">
+      <div class="col-sm-3">
+        <div><%= image_tag @book.image.variant(resize: "180x281"), class: "story-image" %></div>
+      </div>
+      <div class="col-sm-offset-3">
+        <h1 class="text-white"><%= @book.title %></h1>
+        <br>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="text-white" href="#chapters"><b>Chapters:</b> <%= link_to @book.chapters.count, '#chapters' %></p>
+            <p class="text-white"><b>Posted by:</b> <%= link_to @book.user.username, profile_path(@book.user.username) %>  <%= link_to book_avatar_select(@user), profile_path(@book.user.username) %></p>
+            <p class="text-white"> 
+              <% unless @book.author.blank? %>
+                <b>Written by:</b> <%= @book.author %>
+              <% else %>
+                <b>Written by:</b> <%= link_to @book.user.username, profile_path(@book.user.username) %> <%= book_avatar_select(@user) %>
+              <% end %>
+            </p>
+            <p class="text-white"><b>Genre:</b> <%= link_to @book.genre.name, books_path(genre: @book.genre.name) %></p>
+            <p class="text-white"><i class="fa fa-eye"></i><%= pluralize(@book.impressionist_count, "Read") %> </p>
+            <div class="average-reviews-wrapper">
+              <p class="text-white"><b>Average Rating</b></p>
+              <span class="average-review-rating" data-score=<%= @average_review %></span> <span><i>(Based On: <%= pluralize(@book.reviews.count, 'Review') %>)</i></span>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <p class="text-white"><b>Rating:</b> <%= image_tag @book.rating.thumbnail %> <%= link_to @book.rating.name, books_path(rating: @book.rating.name) %></p>
+            <p class="text-white">
+              <% unless @book.tags.blank? %>
+                <span><b>
+                  Tags:</b>
+                  <% @book.tags.each do |tag| %>
+                    <%= link_to tag.name, tag_path(tag), class: "button button_highlight" %>
+                  <% end %>
+                </span>
+              <% end %>
+            </p>
+            <br>
+            <p class="text-white notifications-p"><b>Created on:</b> <%= @book.created_at.strftime('%-d %B %Y') %></p>
+            <p class="text-white notifications-p"><b>Last Updated on:</b> <%= @book.updated_at.strftime('%-d %B %Y') %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid py-1 text-white text-center bread-nav" style="background: #333">
+  <% if user_signed_in? %>
+    <%= link_to new_book_path, class: "btn btn-success btn-sm" do %>
+      <i class="fa fa-book" aria-hidden="true"></i> Write a New Book
+    <% end %>
+  <% end %>
+</div>
+
+  <%#= render 'episodes/meta/table_of_contents' %>
+
+</div>
+
+<div class="container py-4">
+  <div class="row">
+    <div class="col-sm-9 stories-wrapper">
+
+      <% unless @book.prologue.blank? %>
+        <h4>Prologue</h4>
+        <p><%= simple_format(@book.prologue) %></p>
+      <% end %>
+
+      <% unless @book.copyright.blank? %>
+        <h4>Copyright</h4>
+        <p class="story-title"><%= simple_format(@book.copyright) %></p>
+      <% end %>
+
+      <% unless @book.characters.blank? %>
+        <h4>Characters</h4>
+        <p class="story-title"><%= simple_format(@book.characters) %></p>
+      <% end %>
+
+      <%= link_to 'Edit', edit_book_path(@book) %> |
+      <%= link_to 'Destroy', @book, method: :delete, data: { confirm: 'Are you sure?' } %> |
+      <%= link_to 'Back', books_path %>
+
+      <hr>
+      <span id='chapters'><b>Chapters (<%= @book.chapters.count %>)</b></span><span> 
+
+        <% if user_signed_in? %>
+          <% if @book.user_id == current_user.id %>
+            | <%= link_to "Write a new Chapter", new_book_chapter_path(@book), class: "btn btn-sm btn-primary" %>
+          <% end %>
+        <% end %>
+
+      </span>
+
+      <% unless @book.chapters.blank? %>
+
+        <div class="chapter-container mt-2">
+
+          <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl}">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+
+                <% if user_signed_in? %>
+                  <% if @book.user_id == current_user.id %>
+                    <th scope="col">Action</th>
+                    <th scope="col">Action</th>
+                  <% end %>
+                <% end %>
+                
+                <th scope="col">Time Published</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @book.chapters.includes(:user).most_old %>
+            </tbody>
+          </table>
+
+          
+        </div>
+
+      <% else %>
+
+        <p class="text-warning">***This book has no chapter.***</p>
+
+      <% end %>
+      <hr>
+      <div class="text-center">
+        <%= render contact_user_partial_path %>
+      </div>
+      <hr>
+      <h4>Recommended Books by Tags</h4>
+      <div class="row">
+        <%= render 'books/widgets/recommended_tags' %>
+      </div>
+      <hr>
+
+      <br>
+
+      <div class="reviews-container">
+        <h4 class="reviews-header">Reviews</h4>
+        <h5>Average Rating:</h5>
+        (<span class="average-review-rating" data-score=<%= @average_review %>></span> <span><i>Based On: <%= pluralize(@book.reviews.count, 'Review') %>)</i></span>
+        <hr>
+        <section id="reviews-section">
+          <div id="reviews">
+            <%= render @book.reviews %>
+            <% if user_signed_in? %>
+              <div class="review-form">
+                <h4>Add your review to this book.</h4>
+                <hr>
+                <br>
+                <%= render 'reviews/form' %>
+              </div>
+            <% else %>
+              <p>You need to <%= link_to 'sign in', new_user_session_path, class: "btn btn-warning btn-sm" %> before writing a review buddy :)</p>
+            <% end %>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <h5>5 Most read books</h5>
+      <div class="row">
+        <%= render 'books/widgets/most_viewed' %>
+      </div>
+      <hr>
+      <h5>Recommended Books by Genre (<%= link_to @book.genre.name, books_path(genre: @book.genre.name) %>)</h5>
+      <div class="row">
+        <%= render 'books/widgets/recommended' %>
+      </div>
+      <hr>
+      <h5>Other books from <%= link_to @book.user.username, profile_path(@book.user.username) %></h5>
+      <div class="row">
+        <%= render 'books/widgets/other' %>
+      </div>
+      <hr>
+      <%= render 'articles/widgets/recent_articles' %>
+      <br>
+      <%= render 'announcements/widgets/recent_announcements' %>
+    </div>
+  </div>
+</div>
+
+
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	});
+</script>
+
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function() {
+			return $(this).attr('data-score')
+		}
+	});
+</script>

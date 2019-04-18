@@ -1,0 +1,30 @@
+<div class="container py-3">
+  <div class="row">
+    <div class="col-lg-3 col-md-12 col-sm-12 sidebar-col">
+        <%= render 'books/widgets/sidebar_category' %>
+    </div>
+
+		<div class="col-sm-9 stories-col">
+      <div class="rating-page-meta pl-5">
+        <h3>Books Filtered by Rating:</h3>
+        <h4><%= image_tag @rating.thumbnail %> <%= @rating.name %></h4>
+        <p><strong>Description:</strong> <%= @rating.description %></p>
+      </div>
+      <hr>
+      <div class="rating-books">
+        <div class="row books-wrapper">
+          <% unless @rating.books.blank? %>
+            <%= render @rating.books %>
+          <% else %>
+            <h5 class="text-warning">*** There are no books in this Rating. ***</h5>
+          <% end %>
+        </div>
+      </div>
+		</div>
+	</div>
+
+  <%= link_to 'Edit', edit_rating_path(@rating) %>
+  <%= link_to 'Destroy', @rating, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+  <%= link_to 'New Genre', new_rating_path %>
+</div>

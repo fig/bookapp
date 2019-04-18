@@ -1,0 +1,41 @@
+<div class="container-fluid login-bg text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3 box-wrapper">
+        <br>
+        <h2 class="text-center text-white">Welcome Back :) <small class="text-white">Please Sign In below...</small></h2>
+        <hr>
+
+          <%= bootstrap_form_for(resource, 
+                                as: resource_name, 
+                                url: session_path(resource_name)) do |f| %>
+          <br>
+          <%= f.email_field :email, 
+                            autofocus: true, 
+                            class: 'form-control', 
+                            placeholder: 'email' %>
+
+          <%= f.password_field  :password, 
+                                autocomplete: "off", 
+                                class: 'form-control',
+                                placeholder: 'password' %>
+
+
+          <% if devise_mapping.rememberable? -%>
+            <%= f.check_box :remember_me %>
+          <% end -%>
+
+          <%= f.button "Sign In", class: "button6 form-control", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Signing Account..."} %>
+
+          <p class="text-center">Or</p>
+
+          <p class="text-center"><%= link_to "Sign Up Here", new_user_registration_path, class: "button6 form-control", style: "text-decoration: none;" %></p>
+
+        <% end %>
+        <br>
+      </div>
+    </div> 
+  </div>
+
+  <br>
+</div>

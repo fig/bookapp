@@ -1,0 +1,22 @@
+// Place all the styles related to the profiles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.container-fluid.profile-banner {
+    background-position: center;
+    background-size: cover;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+.profile-edit-wrapper {
+    padding-bottom: 50px;
+}
+
+.profile-input-col {
+    padding: 20px;
+}
+
+.container.header-meta.profile-edit-wrapper {
+    padding-bottom: 60px;
+}

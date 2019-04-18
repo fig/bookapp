@@ -1,0 +1,11 @@
+<% recipient = private_conv_recipient(conversation) %>
+<% seen_status = private_conv_seen_status(conversation) %>
+<li id="menu-pc<%= conversation.id %>" class="<%= seen_status %>d-flex justify-content-between align-items-center">
+  <% if recipient.avatar.attached? %>
+    <%= image_tag recipient.avatar.variant(resize: "30x30"), style: 'width: 30px; height: 30px;', class: "rounded-circle" %>
+  <% else %>
+    <%= image_tag 'default-avatar.jpg', class: "rounded-circle", style: "width: 30px; height: 30px;" %>
+  <% end %>
+  <%= link_to recipient.username, get_private_conversation_path(id: recipient.id), 
+              remote: true  %>
+</li>

@@ -1,0 +1,6 @@
+<p><%= link_to genre.name, genre %></p>
+
+<%= link_to 'Edit', edit_genre_path(genre) %>
+<%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<%= link_to 'New Genre', new_genre_path %>

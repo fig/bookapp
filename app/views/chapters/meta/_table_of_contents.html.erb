@@ -1,0 +1,75 @@
+<!-- Large modal -->
+<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg"><span><i class="fa fa-table"></i> Table of Contents</span></button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-dark" id="exampleModalLabel"><b>Contents</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body text-dark text-center">
+        <h3><b>Title:</b> <%= @book.title %></h3>
+        <hr>
+
+        <h4><b>Prologue</b></h4>
+        <p><%= simple_format @book.prologue %></p>
+        <hr>
+
+        <% unless @book.copyright.blank? %>
+          <h4><b>Copyright</b></h4>
+          <p><%= simple_format @book.copyright %></p>
+          <hr>
+        <% end %>
+
+        <% unless @book.characters.blank? %>
+          <h4><b>Cast</b></h4>
+          <p><%= simple_format @book.characters %></p>
+        <% end %>
+        <hr>
+
+        <% unless @book.chapters.blank? %>
+          <h4><b><%= pluralize(@book.chapters.count, "Chapter") %></b></h4>
+
+          <div class="chapter-container mt-2">
+
+            <table class="table table-striped table-bordered table-responsive{-sm|-md|-lg|-xl} text-left">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Action</th>
+
+                  <% if user_signed_in? %>
+                    <% if @book.user_id == current_user.id %>
+                      <th scope="col">Action</th>
+                      <th scope="col">Action</th>
+                    <% end %>
+                  <% end %>
+
+                  <th scope="col">Time Published</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render @book.chapters.most_recent %>
+              </tbody>
+            </table>
+
+            
+          </div>
+
+        <% else %>
+
+          <h6 class="text-danger">***This book has no chapter.***</h6>
+
+        <% end %>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

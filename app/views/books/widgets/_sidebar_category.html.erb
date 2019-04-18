@@ -1,0 +1,166 @@
+<div class="read-more">
+	<h5><%= link_to 'Filter By Tags', tags_path, class: "btn btn-small btn-light btn-block text-left", style: 'border: 1px solid #ddd' %></h5>
+</div>
+
+<%= render 'articles/widgets/recent_articles' %>
+<br>
+<%= render 'announcements/widgets/recent_announcements' %>
+
+<!--<button class="btn-category form-control clearfix" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  <h5 style="text-align:left;">Filter Books by Genre <i class="fa fa-chevron-down pull-right"></i></h5>
+</button>
+<div class="collapse" id="collapseExample">
+  <div class="list-group">
+		<li class="list-group-item">
+			<%= link_to books_path, class: '' do %>
+				<div class="list clearfix">
+					<div class="pull-left">
+						<span class="text-dark">All Books</span>
+					</div>
+
+					<div class="pull-right">
+						<span class="badge badge-primary"></span>
+					</div>
+				</div>
+			<% end %>
+		</li>
+
+		<% Genre.all.sort_by(&:name).each do |genre| %>
+
+			<li class="list-group-item <%= 'active' if params[:genre] == genre.name %>">
+
+				<%= link_to genre do %>
+
+					<div class="d-flex w-100 justify-content-between">
+						<h6 class="mb-1"><%= genre.name %></h6>
+						<small class="list-count"> × <%= genre.books.count %></small>
+					</div>
+					<p class="mb-1 notifications-p"><%= simple_format truncate(genre.description, length: 100) %></p>
+
+				<% end %>
+
+			</li>
+
+		<% end %>		
+  </div>
+</div>
+
+<button class="btn-category form-control mt-2" type="button" data-toggle="collapse" data-target="#collapseRating" aria-expanded="false" aria-controls="collapseRating">
+  <h5 style="text-align:left;">Explore By Rating <i class="fa fa-chevron-down pull-right"></i></h5>
+</button>
+<div class="collapse" id="collapseRating">
+  <div class="list-group">
+
+		<% Rating.all.sort_by(&:name).each do |rating| %>
+
+			<li class="list-group-item <%= 'active' if params[:rating] == rating.name %>">
+
+				<%= link_to rating do %>
+
+					<div class="d-flex w-100 justify-content-between">
+						<h6 class="mb-1"><%= rating.name %></h6>
+						<small class="list-count"> × <%= rating.books.count %></small>
+					</div>
+					<p class="mb-1 notifications-p"><%= rating.description %></p>
+					<!-- <small>Donec id elit non mi porta.</small>
+
+				<% end %>
+
+			</li>
+
+		<% end %>		
+  </div>
+</div>
+
+<button class="btn-category form-control mt-2" type="button" data-toggle="collapse" data-target="#collapseAverageRating" aria-expanded="false" aria-controls="collapseAverageRating">
+  <h5 style="text-align:left;">Filter By Average-Rating <i class="fa fa-chevron-down pull-right"></i></h5>
+</button>
+<div class="collapse" id="collapseAverageRating">
+  <ul class="list-group">
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+			<%= link_to '#' do %>
+				<i class="fa fa-star text-warning" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+			<% end %>
+		</li>
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+			<%= link_to '#' do %>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+			<% end %>
+		</li>
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+			<%= link_to '#' do %>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+			<% end %>
+		</li>
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+			<%= link_to '#' do %>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+			<% end %>
+		</li>
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+			<%= link_to '#' do %>
+				<i class="fa fa-star text-warning" aria-hidden="true" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+			<% end %>
+		</li>
+	</ul>
+</div>-->
+
+<% if user_signed_in? %>
+	<% unless current_user.followers.blank? %>
+		<div class="recent-followers mt-3">
+			<h5>Recent Followers</h5>
+			<hr>
+			<% current_user.followers.each do |follower| %>
+				<%= link_to profile_path(follower.username) do %>
+					<p>
+						<% if follower.avatar.attached? %>
+							<span><%= image_tag follower.avatar.variant(resize: "30x30"), style: 'width: 30px; height: 30px;', class: "rounded-circle" %></span>
+						<% else %>
+							<%= image_tag 'default-avatar.jpg', class: "rounded-circle", style: "width: 30px; height: 30px;" %>
+						<% end %>
+						<%= follower.username %>
+					</p>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+
+	<% unless current_user.following.blank? %>
+		<div class="recent-following mt-3">
+			<h5>Recent Followings</h5>
+			<hr>
+			<% current_user.following.each do |following| %>
+				<%= link_to profile_path(following.username) do %>
+					<p>
+						<% if following.avatar.attached? %>
+							<span><%= image_tag following.avatar.variant(resize: "30x30"), style: 'width: 30px; height: 30px;', class: "rounded-circle" %></span>
+						<% else %>
+							<%= image_tag 'default-avatar.jpg', class: "rounded-circle", style: "width: 30px; height: 30px;" %>
+						<% end %>
+						<%= following.username %>
+					</p>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+<% end %> 

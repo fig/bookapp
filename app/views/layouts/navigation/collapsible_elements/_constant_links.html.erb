@@ -1,0 +1,24 @@
+<% if user_signed_in? %>
+  <li class="mobile-menu">
+    <ul>
+      <li>
+        <%#= link_to main_app.profile_path(current_user.username), style: "text-decoration:none;" do %>
+          <%#= current_user_avatar_select(@user) %> <%= current_user.username %>
+        <%# end %>
+      </li>
+      <li>
+        <%= link_to current_user.username, main_app.profile_path(current_user.username), style: "text-decoration:none;" %>
+      </li>
+      <li>
+        <%= link_to '#', style: "text-decoration:none;" '' do %>
+          <i class="fa fa-list" aria-hidden="true"></i> Saved Stories (<%= current_user.id %>)
+        <% end %>
+      </li>
+      <li>
+        <%= link_to main_app.messenger_path, class: 'messenger-link', style: "text-decoration:none;" do %>
+          <i class="fa fa-envelope" aria-hidden="true"></i> Messenger
+        <% end %>
+      </li>
+    </ul>
+  </li><!-- mobile_menu --> 
+<% end %>

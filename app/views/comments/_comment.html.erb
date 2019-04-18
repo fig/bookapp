@@ -1,0 +1,29 @@
+<div id="comment-<%= comment.id %>"
+    class="comment comment-depth-<%= comment.depth %> media"
+    data-parent-id="<%= comment.parent_id %>">
+  <div class="media-left">
+    <%#= link_to (image_tag comment.user.avatar.variant(resize: "30x30")), profile_path(comment.user.avatar), title: comment.user.username, class: 'rounded-circle' %>
+  </div>
+  <div class="media-body">
+    <div class="media-heading">
+      <span class="name">
+        <%= link_to comment.user.username, profile_path(comment.user.username), title: comment.user.username, class: 'user-avatar' %>
+      </span>
+      <span class="time">
+        <%= l comment.created_at, format: :long %>
+      </span>
+      <span class="opts pull-xs-right">
+        <% if comment.can_reply? %>
+          <%= link_to sanitize('<i class="fa fa-reply"></i>'), comments.reply_comment_path(comment), title: 'reply comment', data: { remote: true } %>
+        <% end %>
+
+        <% if current_user.id == comment.user_id %>
+          <%= link_to sanitize('<i class="fa fa-trash"></i>'), comments.comment_path(comment), title: 'delete comment', data: { method: 'delete', remote: true, confirm: "Are you sure?" } %>
+        <% end %>
+      </span>
+    </div>
+    <div class="media-content markdown">
+      <%= simple_format comment.body %>
+    </div>
+  </div>
+</div>

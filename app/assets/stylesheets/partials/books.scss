@@ -1,0 +1,115 @@
+// Place all the styles related to the Books controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.cf-bg {
+  margin: 0;
+  padding: 0;
+  background: $cf-bg;
+  border-bottom: 1px solid $cf-bg-border;
+}
+
+.c-bg {
+  background: $cf-bg;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin-bottom: 0;
+  list-style: none;
+  ol.breadcrumb {
+      background: $cf-bg;
+      margin-bottom: 0;
+      border-radius: 0;
+  }
+}
+
+.jumbotron {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  p {
+    margin-bottom: 0;
+    font-size: 17px;
+    font-weight: 0;
+  }
+}
+  
+.container.header-meta {
+  position: relative;
+  // z-index: 1;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0,0,0, 0.6);
+  color: #ffffff;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  padding: 0;
+}
+  
+.blur {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  // z-index: 1;
+  -webkit-filter: blur(4px);
+  filter: blur(4px);
+  background-size: cover;
+}
+  
+.average-reviews-wrapper {
+  border: 1px dashed beige;
+  max-width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+  
+.reviews-header {
+  padding: 10px;
+  background: #333333;
+  color: #fff;
+}
+
+.c-button-bar {
+    padding: 1rem 0;
+}
+
+.sidebar-col,.stories-wrapper,.book-form-border {
+  border-right: 1px solid #ddd;
+}
+
+.row.books-wrapper {
+  margin: 0;
+  padding: 0 46px;
+}
+
+.breadcrumb {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.d-flex.w-100.justify-content-between {
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 50px;
+}
+
+.list-count {
+  padding-right: 5px;
+}
+
+// .sidebar-col {
+//   height: 100vh;
+//   overflow: hidden;
+//   overflow-y: scroll;
+// }
+
+.liked {
+  color: red;
+}
+
+.modal-footer {
+  display: block;
+}

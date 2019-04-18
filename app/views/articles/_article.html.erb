@@ -1,0 +1,20 @@
+<div class="col-sm-9 col-full-width pb-2">
+    <div class="an-wrapper clearfix px-2">
+        <div class="an-img-wrapper">
+            <h2><%= link_to article.title, article, style: "color: #333;" %></h2>
+            <div class="article-featured-img">
+                <%= link_to (image_tag article.image, style: 'width: 100%; max-height: 400px;'), article %>
+            </div>
+            <div class="an-meta">
+                <p class="text-secondary"><i class="fa fa-pencil"></i><%= link_to article.user.username, profile_path(article.user.username) %>, <i class="fa fa-clock-o"></i><%= time_ago_in_words article.created_at %> ago, <i class="fa fa-clock-o"></i><%= pluralize(article.impressions.count, 'Read') %></p>
+            </div>
+            <div class="article-content">
+                <%= simple_format truncate(article.content, length: 160) %>
+            </div>
+            <div class="read-more">
+                <%= link_to 'Continue reading', @article, class: "btn btn-small btn-light", style: 'border: 1px solid #ddd' %>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>

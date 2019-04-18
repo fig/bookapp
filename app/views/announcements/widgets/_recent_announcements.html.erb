@@ -1,0 +1,6 @@
+<h5>Recent Announcements</h5>
+<hr>
+<% @announcements.each do |announcement| %>
+    <h6><%= link_to announcement.title, announcement %></h6>
+    <hr>
+<% end %>

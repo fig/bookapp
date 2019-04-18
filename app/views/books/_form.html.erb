@@ -1,0 +1,102 @@
+<%= form_with(model: book, local: true) do |form| %>
+  <% if book.errors.any? %>
+    <div id="error_explanation">
+      <p><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</p>
+
+      <ul>
+      <% book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <h4><%= form.label :title %></h4>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :genre, placeholder: 'Select a Genre' %></h4>
+    <%= select_tag(:genre_id, options_for_select(@genres), :prompt => "Select a Genre for your book", class: "form-control") %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :rating, placeholder: 'Select a Rating' %></h4>
+    <%= select_tag(:rating_id, options_for_select(@ratings), :prompt => "Select a Rating for your book", class: "form-control") %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :image, 'Book Cover' %></h4>
+    <%= form.file_field :image, class: "form-control" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :prologue %></h4>
+    <%= form.text_area :prologue, class: "form-control" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :copyright %></h4>
+    <%= form.text_area :copyright, class: "form-control" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :characters %></h4>
+    <%= form.text_area :characters, class: "form-control" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :author %></h4>
+    <%= form.text_field :author, class: "form-control" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <h4><%= form.label :tag %></h4>
+    <%= form.select :tag_ids, Tag.all.pluck(:name, :id), {}, { multiple: true, class: "selectize" } %>
+  </div>
+
+  <br>
+
+  <div class="actions">
+    <p><%= form.button "Publish Book", class: "btn btn-success", style: "font-size: 16px;", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Publishing Book..."} %></p>
+  </div>
+<% end %>
+
+<div class="modal fade tag-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h3 class="modal-title" id="mySmallModalLabel">Add Tag</h3>
+      </div>
+      <div class="modal-body">
+        <%= form_for Tag.new do |f| %>
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

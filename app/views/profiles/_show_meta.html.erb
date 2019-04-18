@@ -1,0 +1,61 @@
+<div class="container-fluid profile-banner" >
+	<div class="container header-meta profile-edit-wrapper">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="profile-image text-center">
+					<%= profile_avatar_select(@user) %>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<br><br>
+				<h1 class="text-white">
+					<span>
+						<% unless @user.name.blank? %>
+							<%= @user.name %>
+						<% end %>
+						(<%= @user.username  %>)
+					</span>
+					<span style="font-size: 20px;" class="text-warning"> <i class="fa fa-check-square-o"></i></span>
+				</h1>
+				<p class="text-justify"><span class="text-info"><b>Bio:	</b></span><span class="text-white bio-text"><%= @user.bio %></span></p>
+				<div class="views mb-3">
+					<span class="text-white mr-2"><i class="fa fa-eye" style="color: beige"></i> <small><%= pluralize(@user.impressionist_count, "Profile View") %></small>
+				</div>
+
+				<div class="btn-group mr-2" role="group">
+					<% if @user == current_user %>
+						<%= link_to "Edit Profile", edit_profile_path(@user.username), class: "btn btn-info btn-sm" %>
+					<% else %>
+						<span>
+							<%= link_to open_private_conversation_path(id: @user.id), remote: true, method: :post, class: 'bigger-screen-link btn btn-success btn-sm' do %>
+								<i class="fa fa-envelope-o"></i> Chat User
+							<% end %>
+
+							<%= link_to open_messenger_path(id: @user.id, smaller_device: true, type: 'private'), class: 'smaller-screen-link btn btn-success btn-sm' do %>
+								<i class="fa fa-envelope-o"></i> Chat User
+							<% end %>
+						</span>
+						<% if current_user_is_following(current_user.id, @user.id) %>
+							<%= link_to 'Following', unfollow_user_path, remote: true, class: "btn btn-light btn-sm", id: 'unfollow-button', method: :post %>
+						<% else %>
+							<%= link_to 'Follow', follow_user_path, remote: true, class: 'btn follow-button btn-sm btn-sm', id: 'follow-button', method: :post %>
+						<% end %>
+					<% end %>
+					<%= link_to pluralize(@user.followers.count, "Follower"), main_app.user_followers_path, class: "btn btn-light btn-sm" %>
+
+					<%= link_to pluralize(@user.following.count, "Following"), main_app.user_following_path, class: "btn btn-light btn-sm" %>
+				</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<nav aria-label="breadcrumb" role="navigation">
+	<ol class="breadcrumb breadcrumb-body text-center" style="background: #333; border-radius: 0;">
+		<li class="breadcrumb-item"><%= link_to 'All Books', main_app.books_path, style: "color: #ffffff" %></li>
+		<li class="breadcrumb-item text-white" aria-current="page"><u><i><%= @user.username %></i></u></li>
+	</ol>
+</nav>

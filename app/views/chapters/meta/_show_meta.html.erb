@@ -1,0 +1,57 @@
+<div class="jumbotron">
+  <div class="jumbotron-background">
+    <img style="background-image: url(<%= rails_blob_url(@book.image) %>)" class="blur ">
+  </div>
+  <div class="container header-meta">
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb text-center" style="background: #333">
+        <li class="breadcrumb-item"><%= link_to 'All Books', books_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item text-white" aria-current="page"><u><i><%= @book.title %></i></u></li>
+      </ol>
+    </nav>
+    <div class="row story-meta">
+      <div class="col-sm-3">
+        <div><%= image_tag @book.image.variant(resize: "180x249"), class: "story-image" %></div>
+      </div>
+      <div class="col-sm-offset-3">
+        <h1 class="book-header-font text-white"><%= link_to @book.title, @book %> / <%= @chapter.title %></h1>
+        <br>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="text-white"><b>Chapters:</b> <%= link_to @book.chapters.count, '#chapters' %></p>
+            <p class="text-white"><b>Posted by:</b> <%= link_to @book.user.username, profile_path(@book.user.username) %>  <%= link_to book_avatar_select(@user), profile_path(@book.user.username) %></p>
+            <p class="text-white"> 
+              <% unless @book.author.blank? %>
+                <b>Written by:</b> <%= @book.author %>
+              <% else %>
+                <b>Written by:</b> <%= link_to @book.user.username, profile_path(@book.user.username) %> <%= book_avatar_select(@user) %>
+              <% end %>
+            </p>
+            <p class="text-white"><b>Genre:</b> <%= link_to @book.genre.name, books_path(genre: @book.genre.name) %></p>
+            <p class="text-white"><i class="fa fa-eye"></i><%= pluralize(@chapter.impressionist_count, "Read") %> / <i class="fa fa-comments"></i><%= pluralize(@chapter.comments.count, 'Comment') %> </p>
+            <div class="average-reviews-wrapper">
+              <p class="text-white"><b>Average Rating</b></p>
+              <span class="average-review-rating" data-score=<%= @average_review %></span> <span><i>(Based On: <%= pluralize(@book.reviews.count, 'Review') %>)</i></span>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <p class="text-white"><b>Rating:</b> <%= image_tag @book.rating.thumbnail %> <%= link_to @book.rating.name, books_path(rating: @book.rating.name) %></p>
+            <p class="text-white">
+              <% unless @book.tags.blank? %>
+                <span><b>
+                  Tags:</b>
+                  <% @book.tags.each do |tag| %>
+                    <%= link_to tag.name, tag_path(tag), class: "button button_highlight" %>
+                  <% end %>
+                </span>
+              <% end %>
+            </p>
+            <p class="text-white"><b>Created on:</b> <%= @book.created_at.strftime('%-d %B %Y') %></p>
+            <p class="text-white"><b>Last Updated on:</b> <%= @book.updated_at.strftime('%-d %B %Y') %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<% @book.genre.books.order("RANDOM()").limit(7).reject { |b| b.id == @book.id }.each do |book| %>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 stories-col">
+        <a href="#" data-toggle="modal" title='<%= book.title %>' data-target="#myModal-<%= book.id %>"><%= image_tag book.image.variant(resize: '141x222'), style: 'width: 141px; height: 160px;' %></a>
+
+        <div class="modal fade" id="myModal-<%= book.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel"><b>Overview:</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                        <div class="col-sm-4">
+                            <%= image_tag book.image.variant(resize: '141x222'), style: 'width: 141px; height: 222px;' %>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <h2><%= book.title %></h2>
+                            <p class="modal-p"><small>
+                            <span>
+                                <b>Posted by:</b> <%= link_to book.user.username, profile_path(book.user.username) %>
+                            </span>
+                            <span>
+                                <% if book.user.avatar.attached? %>
+                                    <span><%= link_to (image_tag book.user.avatar.variant(resize: "30x30"), class: "rounded-circle") , profile_path(book.user.username) %></span>
+                                <% else %>
+                                    <%= link_to (image_tag 'default-avatar.jpg', class: "rounded-circle", style: "width: 30px; height: 30px;"), profile_path(book.user.username) %>
+                                <% end %>
+                            </span></small>
+                            </p>
+                            <% unless book.author.blank? %>
+                                <p class="modal-p"><small><b>Written by:</b> <%= book.author %></small></p>
+                            <% else %>
+                                <p class="modal-p"><small><b>Written by:</b> <%= book.user.username %></small></p>
+                            <% end %>
+
+                            <% unless book.genre.blank? %>
+                                <p class="modal-p"><small><b>Genre:</b> <%= link_to book.genre.name, books_path(genre: book.genre.name) %></small></p>
+                            <% end %>
+
+                            <p class="modal-p"><small><b>status:</b> Completed</small></p>
+
+                            <p class="modal-p"><small><b><i class="fa fa-eye"></i></b> <span class="ml-2"><%= pluralize(book.impressionist_count, "Read") %></span></small></p>
+                            <p class="modal-p"><small><b>Chapters:</b> <%= book.chapters.count %></small></p>
+                            <div class="average-reviews-wrapper">
+                            <h5>Average Rating</h5>
+                            <span class="average-review-rating" data-score=<%= @average_review %>></span> <span><i>(Based On: <%= pluralize(book.reviews.count, 'Review') %>)</i></span>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <hr>
+                                <h4>Prologue</h4>
+                                <hr>
+                                <p class="homepage-about"><%= book.prologue %></p>	
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer homepage-modal">
+                        <%# if user_signed_in? %>
+                        <p class="text-center" id="story_<%#= story.id %>_save_stories">
+                            <%#= render partial: "stories/save_stories", locals: {story: story} %>
+                        </p>
+                        <%# end %>
+
+                        <p>
+                        <%= link_to book, class: "btn btn-success btn-sm btn-block" do %>
+                                <i class="fa fa-spectacle" aria-hidden="true"></i> Read Book
+                            <% end %>
+                        </p>
+
+                        <% if user_signed_in? %>
+                            <% if book.user_id == current_user.id %>
+                                <p>
+                                <%= link_to edit_book_path(book), class: "btn btn-info btn-sm btn-block" do %>
+                                        <i class="fa fa-edit" aria-hidden="true"></i> Edit Book
+                                    <% end %>
+                                </p>
+                            <% end %>
+                        <% end %>
+
+                        <p class="btn btn-warning btn-sm btn-block" data-dismiss="modal"><i class="fa fa-exit"></i>Close</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>

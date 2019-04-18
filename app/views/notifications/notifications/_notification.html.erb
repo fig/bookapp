@@ -1,0 +1,22 @@
+<%= cache(['notifications', Notifications::VERSION, notification]) do %>
+<div id="notification-<%= notification.id %>"
+     data-id="<%= notification.id %>"
+     class="media notification notification-<%= notification.notify_type %><%= ' unread' unless notification.read? %>">
+  <div class="media-left">
+    <% if notification.actor_profile_url && notification.actor_avatar_url %>
+      <%= link_to image_tag(notification.actor_avatar_url), notification.actor_profile_url, title: notification.actor_name, class: 'user-avatar' %>
+    <% end %>
+  </div>
+  <div class="media-body">
+    <%= render partial: "/notifications/#{notification.notify_type}", locals: { notification: notification } %>
+    <% unless notification.target.blank? %>
+      <p class="text-info notifications-p"><i class="fa fa-clock-o"></i><%= time_ago_in_words notification.created_at %> ago</p>
+    <% end %>
+  </div>
+  <!--<div class="media-right">
+    <%#= l notification.created_at, format: :short %>
+    <p class="text-info"><%#= time_ago_in_words notification.created_at %> ago</p>
+  </div>-->
+</div>
+<% end %>
+<hr>

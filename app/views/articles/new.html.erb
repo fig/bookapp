@@ -1,0 +1,24 @@
+<% provide(:page_title, 'New Article') %>
+
+<nav aria-label="breadcrumb" role="navigation">
+	<ol class="breadcrumb breadcrumb-body text-center" style="background: #333; border-radius: 0;">
+		<li class="breadcrumb-item"><%= link_to 'Home', main_app.home_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item"><%= link_to 'All articles', articles_path, style: "color: #ffffff" %></li>
+        <li class="breadcrumb-item text-white" aria-current="page"><u><i>Start Writing (Article)</i></u></li>
+	</ol>
+</nav>
+
+<div class="container py-2">
+    <div class="row">
+        <div class="col-sm-12 book-form-border">
+
+            <h1>Start Writing (Article)</h1>
+            <hr><br>
+
+            <%= render 'form', article: @article %>
+
+            <%= link_to 'Back', articles_path %>
+
+        </div>
+    </div>
+</div>

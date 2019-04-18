@@ -1,0 +1,16 @@
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis beatae commodi, eos aperiam officia ducimus incidunt excepturi unde quam quod modi velit iusto inventore. Quaerat illo ab aut atque ad?
+    Laboriosam, beatae. Temporibus non amet animi voluptas culpa repellat sequi optio eos aut dolore eligendi iste, laboriosam, tenetur neque exercitationem dolores reiciendis, ipsum facilis doloribus ipsam facere odit. Corporis, pariatur!
+    Ipsa accusantium nemo corrupti consectetur voluptate id nobis quod inventore officiis omnis. Explicabo id impedit debitis magnam, quo harum accusamus accusantium in perferendis, est porro, nisi minus! Tenetur, fuga autem.
+    Excepturi asperiores ratione saepe obcaecati! Sequi quia beatae iure ab, voluptatum voluptate veritatis debitis molestias hic laborum laboriosam et id libero eius sed autem odio tempora molestiae nostrum, excepturi cum.
+    Nam inventore officiis dignissimos optio. Laboriosam soluta atque officia pariatur reiciendis, nam reprehenderit deleniti excepturi tempora iste sint. Delectus, minima. Eligendi nihil iure aspernatur quidem consectetur maxime molestias ea deserunt.
+
+    def find_conversation!
+        if params[:receiver_id]
+            @receiver = User.find_by(id: params[:receiver_id])
+            redirect_to(root_path) and return unless @receiver
+            @conversation = Conversation.between(current_user.id, @receiver.id)[0]
+        else
+            @conversation = Conversation.find_by(id: params[:conversation_id])
+            redirect_to(root_path) and return unless @conversation && @conversation.participates?(current_user)
+        end
+    end

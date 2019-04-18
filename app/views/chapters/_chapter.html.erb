@@ -1,0 +1,14 @@
+<tr>
+	<td class="genre-list"><%= link_to chapter.title, book_chapter_path(@book, chapter.id), id: 'disqus_thread' %></td>
+
+	<td><%= link_to 'Read', book_chapter_path(@book, chapter.id), class: "btn btn-success btn-sm" %></td>
+
+	<% if user_signed_in? %>
+		<% if chapter.user_id == current_user.id %>
+			<td><%= link_to 'Edit', edit_book_chapter_path(chapter.book, chapter), class: "btn btn-success btn-sm" %></td>
+			
+			<td><%= link_to 'Delete', book_chapter_path(chapter.book, chapter), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %></td>
+		<% end %>
+	<% end %>
+	<td><%= time_ago_in_words chapter.created_at %> ago</td>
+</tr>

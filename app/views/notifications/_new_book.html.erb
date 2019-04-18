@@ -1,0 +1,5 @@
+<% if notification.target %>
+  <div class=''>
+    <p class="notifications-p"><i class="fa fa-book text-secondary"></i>| <%= link_to notification.actor.username, main_app.profile_path(notification.actor.username) %> published a new book titled <%= link_to notification.second_target.title, main_app.book_path(notification.second_target) %></p>
+  </div>
+<% end %>

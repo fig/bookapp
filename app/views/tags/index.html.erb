@@ -1,0 +1,18 @@
+<% provide(:page_title, 'All Tags') %>
+
+<div class="container py-3">
+      <div class="row">
+            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-col">
+                  <%= render 'books/widgets/sidebar_category' %>
+            </div>
+
+            <div class="col-sm-9 bgWhite">
+                  <h2>All Book Tags: × <%= pluralize(@tags.count, 'Tags') %></h2>
+                  <hr>
+                  <% unless @tags.blank? %>
+                        <%= render @tags %>
+                  <% end %>
+            </div>
+      </div>
+</div>
+<br>

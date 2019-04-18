@@ -1,0 +1,9 @@
+<h4 class="mb-2"><%= link_to episode.title, story_episode_path(@story, episode.id) %></h4>
+
+<% if user_signed_in? %>
+	<% if episode.user_id == current_user.id %>
+		<span><%= link_to 'Edit', edit_story_episode_path(@episode.story, @episode) %></span>
+		<span>|</span>
+		<span><%= link_to 'Delete', genre_story_path(@story.genre, @story), method: :delete, data: { confirm: "Are you sure?" } %></span>
+	<% end %>
+<% end %>
